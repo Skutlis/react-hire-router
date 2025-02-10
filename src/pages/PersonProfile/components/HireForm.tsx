@@ -3,19 +3,25 @@ import { Person } from '../../../objects/PersonInfoObjects'
 import { Link, useNavigate } from 'react-router-dom';
 
 function HireForm(props : {person : Person;
-                          hirePerson: (person : Person) => void
+                          hirePerson: (person : Person) => void;
+                          hired: Person[]
 }) {
-  const { person, hirePerson } = props;
-  const [wage, setWage] = useState(0)
+  const { person, hirePerson, hired } = props;
+  const [wage, setWage] = useState(person.wage ?? 0)
   const navigate = useNavigate()
   function handleSubmit(event : React.FormEvent<HTMLFormElement>) {
     person.wage = wage;
-    hirePerson(person)
-    console.log(person)
+    if (!editMode()){
+      hirePerson(person)
+    }
+    
     navigate("/")
     event.preventDefault()
-    
+  
+  }
 
+  const editMode = () => {
+    return hired.filter((p) => p.login.uuid == p.login.uuid).length > 0; //Person already hired?
   }
 
   return (
@@ -29,7 +35,7 @@ function HireForm(props : {person : Person;
         value={wage}
       />
       
-      <button type="submit">Hire</button>
+      <button type="submit">{editMode() ? "Edit" : "Hire"}</button>
     
       
       

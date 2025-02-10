@@ -51,7 +51,8 @@ export default function App() {
                                     candidates={candidates} />} />
         <Route path="/profile/:id"
               element={<PersonProfile  candidates={candidates}
-                                      hirePerson={hirePerson}/> } />
+                                      hirePerson={hirePerson}
+                                      hired={hiredPeople}/> } />
       </Routes>
     </>
   )
